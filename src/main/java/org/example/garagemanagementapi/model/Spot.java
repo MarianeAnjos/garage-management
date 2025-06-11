@@ -45,6 +45,10 @@ public class Spot {
         this.occupied = occupied;
     }
 
+    public Boolean isOccupied (){
+        return occupied;
+    }
+
     public String getLicensePlate() {
         return licensePlate;
     }

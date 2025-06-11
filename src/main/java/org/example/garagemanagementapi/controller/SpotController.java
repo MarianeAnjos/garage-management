@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,9 +35,20 @@ public class SpotController {
     }
 
     @PostMapping
-    public ResponseEntity<Spot> creatSpot (@RequestBody Spot spot){
+    public ResponseEntity<Spot> createSpot (@RequestBody Spot spot) {
         Spot novoSpot = spotRepository.save(spot);
         return new ResponseEntity<>(novoSpot, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/spot-status")
+    public ResponseEntity<?> getSpotStatus(@RequestBody Map<String, Double> coord) {
+        Double lat = coord.get("lat");
+        Double lng = coord.get("lng");
+        Optional<Spot> spot = spotRepository.findByLatAndLng(lat, lng);
+        if (spot.isPresent()) {
+            return ResponseEntity.ok(spot.get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Spot not found");
     }
 
     @PutMapping("/{id}")
@@ -46,13 +58,14 @@ public class SpotController {
             Spot spot = spotOptional.get();
             spot.setLicensePlate(spotDetails.getLicensePlate());
             spot.setLat(spotDetails.getLat());
-            spot.setLongi(spotDetails.getLongi());
+            spot.setLng(spotDetails.getLng());
             spot.setOccupied(spotDetails.isOccupied());
 
             Spot updatedSpot = spotRepository.save(spot);
             return new ResponseEntity<>(updatedSpot, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @DeleteMapping("/{id}")

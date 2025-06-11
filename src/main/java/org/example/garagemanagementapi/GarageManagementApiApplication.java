@@ -16,14 +16,20 @@ public class GarageManagementApiApplication {
     @Bean
     CommandLineRunner runner(SpotRepository spotRepository) {
         return args -> {
-            Spot spot1 = new Spot();
-            spot1.setLat(-23.561684);
-            spot1.setLongi(-46.655981);
-            spot1.setLicensePlate("LMN01");
-            spot1.setOccupied(false);
+            if (spotRepository.findAll().isEmpty()) {
+                Spot initialSpot = new Spot();
 
-            spotRepository.save(spot1);
-            System.out.println("Spot salvo com sucesso!");
+                initialSpot.setLat(-23.561684);
+                initialSpot.setLng(-46.655981);
+                initialSpot.setLicensePlate("LMN01");
+                initialSpot.setOccupied(false);
+
+                spotRepository.save(initialSpot);
+                System.out.println("Spot salvo com sucesso!");
+            } else {
+                System.out.println("Spot já existe no banco");
+            }
         };
     }
+
 }

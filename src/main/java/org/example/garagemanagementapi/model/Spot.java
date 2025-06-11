@@ -1,6 +1,7 @@
 package org.example.garagemanagementapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -10,10 +11,10 @@ public class Spot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double lat;
-    private Double longi;
+    private Double lng;
     private Boolean occupied = false;
 
-    @NotNull
+    @NotBlank (message = "Placa obrigatória")
     private String licensePlate;
 
     public Long getId() {
@@ -32,12 +33,12 @@ public class Spot {
         this.lat = lat;
     }
 
-    public Double getLongi() {
-        return longi;
+    public Double getLng() {
+        return lng;
     }
 
-    public void setLongi(Double longi) {
-        this.longi = longi;
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     public Boolean getOccupied() {

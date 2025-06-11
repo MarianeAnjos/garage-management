@@ -1,6 +1,7 @@
 package org.example.garagemanagementapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Spot {
@@ -11,6 +12,8 @@ public class Spot {
     private Double lat;
     private Double longi;
     private Boolean occupied = false;
+
+    @NotNull
     private String licensePlate;
 
     public Long getId() {

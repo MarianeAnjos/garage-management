@@ -8,6 +8,10 @@ import java.util.Optional;
 
 @Repository
 public interface SpotRepository extends JpaRepository<Spot, Long> {
+
+    Optional<Spot> findFirstByOccupiedFalse();
+
     Optional<Spot> findByLatAndLng(Double lat, Double lng);
 
+    Optional<Spot> findByLicensePlate(String licensePlate);
 }

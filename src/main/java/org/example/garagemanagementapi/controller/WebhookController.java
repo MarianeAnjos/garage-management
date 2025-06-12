@@ -8,6 +8,7 @@ import org.example.garagemanagementapi.repository.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,7 +26,6 @@ public class WebhookController {
 
     @PostMapping("/webhook")
     public ResponseEntity<String> handleWebhook(@RequestBody WebhookEvent webhookEvent) {
-
         String eventType = webhookEvent.getEvent();
         String licensePlate = webhookEvent.getLicensePlate();
 
@@ -49,7 +49,7 @@ public class WebhookController {
             }
 
         } else if ("EXIT".equalsIgnoreCase(eventType)) {
-            Optional<Vehicle> vehicleOpt = vehicleRepository.findByLicensePlate(licensePlate);
+            Optional<Vehicle> vehicleOpt = vehicleRepository.findFirstByLicensePlateAndExitTimeIsNull(licensePlate);
             if (vehicleOpt.isPresent()) {
                 Vehicle vehicle = vehicleOpt.get();
                 LocalDateTime exitTime = LocalDateTime.now();
@@ -63,7 +63,7 @@ public class WebhookController {
                 Optional<Spot> spotOpt = spotRepository.findByLicensePlate(licensePlate);
                 spotOpt.ifPresent(spot -> {
                     spot.setOccupied(false);
-                    spot.setLicensePlate(null);
+                    spot.setLicensePlate("");
                     spotRepository.save(spot);
                 });
 
@@ -79,6 +79,12 @@ public class WebhookController {
     private double calculatePrice(long minutes) {
         double hourlyRate = 10.0;
         double hours = Math.ceil(minutes / 60.0);
-        return hours * hourlyRate;
+
+        long totalSpots = spotRepository.count();
+        long freeSpots = spotRepository.findAll().stream().filter(spot -> !spot.getOccupied()).count();
+        double occupancyRate = 1.0 - (freeSpots / (double) totalSpots);
+        double dynamicFactor = occupancyRate >= 0.8 ? 1.2 : 1.0;
+
+        return hours * hourlyRate * dynamicFactor;
     }
 }

@@ -14,4 +14,6 @@ public interface SpotRepository extends JpaRepository<Spot, Long> {
     Optional<Spot> findByLatAndLng(Double lat, Double lng);
 
     Optional<Spot> findByLicensePlate(String licensePlate);
+
+    long countByOccupiedFalse();
 }

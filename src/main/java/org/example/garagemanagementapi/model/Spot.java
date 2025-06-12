@@ -1,7 +1,6 @@
 package org.example.garagemanagementapi.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Spot {
@@ -13,7 +12,6 @@ public class Spot {
     private Double lng;
     private Boolean occupied = false;
 
-    @NotBlank (message = "Placa obrigatória")
     private String licensePlate;
 
     public Long getId() {

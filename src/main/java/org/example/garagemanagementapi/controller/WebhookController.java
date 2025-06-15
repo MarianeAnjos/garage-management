@@ -26,6 +26,7 @@ public class WebhookController {
 
     @PostMapping("/webhook")
     public ResponseEntity<String> handleWebhook(@RequestBody WebhookEvent webhookEvent) {
+        System.out.println("Received webhook: " + webhookEvent); // Log para depuração
         String eventType = webhookEvent.getEvent();
         String licensePlate = webhookEvent.getLicensePlate();
 
@@ -35,7 +36,6 @@ public class WebhookController {
             vehicle.setEntryTime(LocalDateTime.now());
             vehicleRepository.save(vehicle);
             return new ResponseEntity<>("Vehicle entry recorded", HttpStatus.CREATED);
-
         } else if ("PARKED".equalsIgnoreCase(eventType)) {
             Optional<Spot> spotOpt = spotRepository.findByLatAndLng(webhookEvent.getLat(), webhookEvent.getLng());
             if (spotOpt.isPresent()) {
@@ -47,7 +47,6 @@ public class WebhookController {
             } else {
                 return new ResponseEntity<>("Spot not found", HttpStatus.NOT_FOUND);
             }
-
         } else if ("EXIT".equalsIgnoreCase(eventType)) {
             Optional<Vehicle> vehicleOpt = vehicleRepository.findFirstByLicensePlateAndExitTimeIsNull(licensePlate);
             if (vehicleOpt.isPresent()) {
@@ -67,7 +66,6 @@ public class WebhookController {
                     spot.setLicensePlate(null);
                     spotRepository.save(spot);
                 });
-
                 return new ResponseEntity<>("Vehicle exited. Total price: R$ " + price, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Vehicle not found", HttpStatus.NOT_FOUND);
@@ -84,7 +82,6 @@ public class WebhookController {
         long freeSpots = spotRepository.findAll().stream().filter(spot -> !spot.getOccupied()).count();
         double occupancyRate = totalSpots > 0 ? 1.0 - (freeSpots / (double) totalSpots) : 0.0;
         double dynamicFactor = occupancyRate >= 0.8 ? 1.2 : 1.0;
-
         return hours * hourlyRate * dynamicFactor;
     }
 }

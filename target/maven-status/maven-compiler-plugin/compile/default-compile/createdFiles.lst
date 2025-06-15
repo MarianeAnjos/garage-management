@@ -1,3 +1,15 @@
-org/example/garagemanagementapi/repository/SpotRepository.class
-org/example/garagemanagementapi/model/Spot.class
+org/example/garagemanagementapi/controller/SpotController.class
 org/example/garagemanagementapi/GarageManagementApiApplication.class
+org/example/garagemanagementapi/dto/RevenueResponse.class
+org/example/garagemanagementapi/controller/WebhookController.class
+org/example/garagemanagementapi/controller/ParkedController.class
+org/example/garagemanagementapi/repository/VehicleRepository.class
+org/example/garagemanagementapi/model/Spot.class
+org/example/garagemanagementapi/controller/PlateExitController.class
+org/example/garagemanagementapi/dto/PlateStatusRequest.class
+org/example/garagemanagementapi/controller/PlateStatusController.class
+org/example/garagemanagementapi/controller/RevenueController.class
+org/example/garagemanagementapi/dto/PlateStatusResponse.class
+org/example/garagemanagementapi/dto/WebhookEvent.class
+org/example/garagemanagementapi/repository/SpotRepository.class
+org/example/garagemanagementapi/model/Vehicle.class

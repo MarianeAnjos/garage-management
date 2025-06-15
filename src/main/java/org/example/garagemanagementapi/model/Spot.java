@@ -3,15 +3,19 @@ package org.example.garagemanagementapi.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(
+        name = "spot",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"lat", "lng"})
+)
 public class Spot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Double lat;
     private Double lng;
     private Boolean occupied = false;
-
     private String licensePlate;
 
     public Long getId() {

@@ -1,4 +1,3 @@
-========================================
 Gerenciamento de Garagem - API
 ========================================
 
@@ -255,6 +254,5 @@ Considerações Finais:
 Esta API foi desenvolvida para demonstrar uma solução completa com Java 17, Spring Boot, Maven, Lombok, Docker e integração via Webhook para gerenciamento de estacionamento, utilizando MySQL como banco de dados.
 Caso haja dúvidas ou contribuições, sinta-se à vontade para abrir issues ou enviar pull requests.
 
-========================================
-Feito com ❤️ por Mariane Anjos
-========================================
+Feito com <3 por Mariane Anjos
+

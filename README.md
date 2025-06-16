@@ -191,6 +191,6 @@ mysql> USE garage_api;
 ----------------------------------------
 Autoria:
 ----------------------------------------
-Projeto desenvolvido por Mariane Ferreira dos Anjos  
+Projeto desenvolvido por Mariane Anjos  
 Contato: mariane.ferreiraanjos@outlook.com  
-Entrega técnica: Estapar - Back-end 
+Entrega técnica: Back-end 

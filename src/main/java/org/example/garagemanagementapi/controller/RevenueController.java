@@ -4,6 +4,7 @@ import org.example.garagemanagementapi.dto.RevenueResponse;
 import org.example.garagemanagementapi.model.Vehicle;
 import org.example.garagemanagementapi.repository.VehicleRepository;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class RevenueController {
     }
 
     @GetMapping
-    public RevenueResponse getRevenue(
+    public ResponseEntity<RevenueResponse> getRevenue(
             @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate date
@@ -36,15 +37,15 @@ public class RevenueController {
             vehicles = vehicleRepository.findByExitTimeIsNotNull();
         }
 
-        double total = vehicles.stream()
-                .mapToDouble(v -> v.getPrice() != null ? v.getPrice() : 0.0)
+        double totalRevenue = vehicles.stream()
+                .mapToDouble(v -> (v.getPrice() != null && v.getPrice() >= 0) ? v.getPrice() : 0.0)
                 .sum();
 
         RevenueResponse response = new RevenueResponse();
-        response.setAmount(total);
+        response.setAmount(totalRevenue);
         response.setCurrency("BRL");
         response.setTimestamp(LocalDateTime.now());
 
-        return response;
+        return ResponseEntity.ok(response);
     }
 }

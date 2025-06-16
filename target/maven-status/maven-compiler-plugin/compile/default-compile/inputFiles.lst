@@ -2,6 +2,7 @@
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/PlateExitController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/model/Spot.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/RevenueController.java
+/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/config/CorsConfig.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/ParkedController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/PlateStatusController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/dto/RevenueResponse.java
@@ -9,7 +10,11 @@
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/dto/PlateStatusRequest.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/WebhookController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/repository/VehicleRepository.java
+/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/EntryController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/repository/SpotRepository.java
+/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/service/PricingService.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/dto/PlateStatusResponse.java
+/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/service/GarageService.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/SpotController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/model/Vehicle.java
+/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/service/BillingService.java

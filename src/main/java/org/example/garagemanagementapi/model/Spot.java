@@ -3,20 +3,15 @@ package org.example.garagemanagementapi.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(
-        name = "spot",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"lat", "lng"})
-)
 public class Spot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String sector;
     private Double lat;
     private Double lng;
-    private Boolean occupied = false;
-    private String licensePlate;
 
     public Long getId() {
         return id;
@@ -24,6 +19,14 @@ public class Spot {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 
     public Double getLat() {
@@ -42,16 +45,12 @@ public class Spot {
         this.lng = lng;
     }
 
-    public Boolean getOccupied() {
+    public boolean isOccupied() {
         return occupied;
     }
 
-    public void setOccupied(Boolean occupied) {
+    public void setOccupied(boolean occupied) {
         this.occupied = occupied;
-    }
-
-    public Boolean isOccupied (){
-        return occupied;
     }
 
     public String getLicensePlate() {
@@ -61,4 +60,8 @@ public class Spot {
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
+
+    private boolean occupied;
+    private String licensePlate;
+
 }

@@ -2,70 +2,58 @@ package org.example.garagemanagementapi.controller;
 
 import org.example.garagemanagementapi.dto.PlateStatusRequest;
 import org.example.garagemanagementapi.dto.PlateStatusResponse;
-import org.example.garagemanagementapi.model.Spot;
 import org.example.garagemanagementapi.model.Vehicle;
 import org.example.garagemanagementapi.repository.SpotRepository;
 import org.example.garagemanagementapi.repository.VehicleRepository;
-import org.springframework.http.ResponseEntity;
+import org.example.garagemanagementapi.service.BillingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/plate-status")
 public class PlateStatusController {
 
-    private final VehicleRepository vehicleRepository;
-    private final SpotRepository spotRepository;
+    private final VehicleRepository vehicleRepo;
+    private final SpotRepository spotRepo;
+    private final BillingService billingService;
 
-    public PlateStatusController(VehicleRepository vehicleRepository, SpotRepository spotRepository) {
-        this.vehicleRepository = vehicleRepository;
-        this.spotRepository = spotRepository;
+    @Autowired
+    public PlateStatusController(VehicleRepository vehicleRepo,
+                                 SpotRepository spotRepo,
+                                 BillingService billingService) {
+        this.vehicleRepo = vehicleRepo;
+        this.spotRepo = spotRepo;
+        this.billingService = billingService;
     }
 
     @PostMapping
-    public ResponseEntity<?> getPlateStatus(@RequestBody PlateStatusRequest request) {
+    public PlateStatusResponse getPlateStatus(@RequestBody PlateStatusRequest request) {
         String licensePlate = request.getLicensePlate();
 
-        Optional<Vehicle> vehicleOpt = vehicleRepository.findFirstByLicensePlateAndExitTimeIsNull(licensePlate);
-        if (vehicleOpt.isEmpty()) {
-            return ResponseEntity.status(404).body("Veículo não encontrado ou já finalizado.");
-        }
+        Vehicle vehicle = vehicleRepo.findFirstByLicensePlateAndExitTimeIsNull(licensePlate)
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado ou já saiu."));
 
-        Vehicle vehicle = vehicleOpt.get();
         LocalDateTime now = LocalDateTime.now();
-        Duration duration = Duration.between(vehicle.getEntryTime(), now);
-        long minutes = duration.toMinutes();
-        double price = calculatePrice(minutes);
+        long minutes = Duration.between(vehicle.getEntryTime(), now).toMinutes();
 
-        Optional<Spot> spotOpt = spotRepository.findByLicensePlate(licensePlate);
+        int totalSpots = (int) spotRepo.count();
+        int freeSpots = (int) spotRepo.countByOccupiedFalse();
+        double price = billingService.calculateCharge(minutes, totalSpots, freeSpots, 10.0);
 
         PlateStatusResponse response = new PlateStatusResponse();
-        response.setLicensePlate(vehicle.getLicensePlate());
+        response.setLicensePlate(licensePlate);
         response.setEntryTime(vehicle.getEntryTime());
         response.setTimeParked(now);
         response.setPriceUntilNow(price);
 
-        if (spotOpt.isPresent()) {
-            Spot spot = spotOpt.get();
+        spotRepo.findByLicensePlate(licensePlate).ifPresent(spot -> {
             response.setLat(spot.getLat());
             response.setLng(spot.getLng());
-        }
+        });
 
-        return ResponseEntity.ok(response);
-    }
-
-    private double calculatePrice(long minutes) {
-        double hourlyRate = 10.0;
-        double hours = Math.max(1, Math.ceil(minutes / 60.0));
-
-        long totalSpots = spotRepository.count();
-        long freeSpots = spotRepository.findAll().stream().filter(spot -> !spot.getOccupied()).count();
-        double occupancyRate = totalSpots > 0 ? 1.0 - (freeSpots / (double) totalSpots) : 0.0;
-        double dynamicFactor = occupancyRate >= 0.8 ? 1.2 : 1.0;
-
-        return hours * hourlyRate * dynamicFactor;
+        return response;
     }
 }

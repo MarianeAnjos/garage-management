@@ -1,6 +1,7 @@
 package org.example.garagemanagementapi.model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,8 +13,6 @@ public class Vehicle {
 
     private String licensePlate;
     private LocalDateTime entryTime;
-    private LocalDateTime exitTime;
-    private Double price;
 
     public Long getId() {
         return id;
@@ -54,4 +53,8 @@ public class Vehicle {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    private LocalDateTime exitTime;
+    private Double price;
+
 }

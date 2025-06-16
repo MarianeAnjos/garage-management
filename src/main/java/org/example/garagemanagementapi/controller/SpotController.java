@@ -26,54 +26,51 @@ public class SpotController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Spot> getSpotById(@PathVariable Long id){
-        Optional<Spot> spotOptional = spotRepository.findById(id);
-        if (spotOptional.isPresent()){
-            return new ResponseEntity<>(spotOptional.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Spot> getSpotById(@PathVariable Long id) {
+        return spotRepository.findById(id)
+                .map(spot -> ResponseEntity.ok(spot))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping
-    public ResponseEntity<Spot> createSpot (@RequestBody Spot spot) {
+    public ResponseEntity<Spot> createSpot(@RequestBody Spot spot) {
+        spot.setId(null); // Garante que não sobrescreve uma vaga existente
         Spot novoSpot = spotRepository.save(spot);
-        return new ResponseEntity<>(novoSpot, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoSpot);
     }
 
     @PostMapping("/spot-status")
-    public ResponseEntity<?> getSpotStatus(@RequestBody Map<String, Double> coord) {
+    public ResponseEntity<Spot> getSpotStatus(@RequestBody Map<String, Double> coord) {
         Double lat = coord.get("lat");
         Double lng = coord.get("lng");
-        Optional<Spot> spot = spotRepository.findByLatAndLng(lat, lng);
-        if (spot.isPresent()) {
-            return ResponseEntity.ok(spot.get());
+
+        if (lat == null || lng == null) {
+            return ResponseEntity.badRequest().build(); // Ou retornar 400 com DTO separado, se quiser
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Spot not found");
+
+        return spotRepository.findByLatAndLng(lat, lng)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Spot> updateSpot(@PathVariable long id, @RequestBody Spot spotDetails){
-        Optional<Spot> spotOptional = spotRepository.findById(id);
-        if(spotOptional.isPresent()) {
-            Spot spot = spotOptional.get();
-            spot.setLicensePlate(spotDetails.getLicensePlate());
+    public ResponseEntity<Spot> updateSpot(@PathVariable Long id, @RequestBody Spot spotDetails) {
+        return spotRepository.findById(id).map(spot -> {
             spot.setLat(spotDetails.getLat());
             spot.setLng(spotDetails.getLng());
+            spot.setLicensePlate(spotDetails.getLicensePlate());
             spot.setOccupied(spotDetails.isOccupied());
-
-            Spot updatedSpot = spotRepository.save(spot);
-            return new ResponseEntity<>(updatedSpot, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+            Spot updated = spotRepository.save(spot);
+            return ResponseEntity.ok(updated);
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSpot(@PathVariable Long id){
-        if (spotRepository.existsById(id)){
+    public ResponseEntity<Void> deleteSpot(@PathVariable Long id) {
+        if (spotRepository.existsById(id)) {
             spotRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

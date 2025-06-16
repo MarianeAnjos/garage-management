@@ -167,19 +167,15 @@ Lombok:
 Erros Comuns:
 ----------------------------------------
 
-1. Endpoints não aparecem no Swagger
-   - Verifique se as controllers têm @RestController
-   - Certifique-se de que estão no mesmo pacote base do @SpringBootApplication
-
-2. "Spot not found"
+1. "Spot not found"
    - Certifique-se de ter criado um Spot com as coordenadas enviadas
 
-3. Porta 8080 ocupada
+2. Porta 8080 ocupada
    - Finalize o processo que está usando a porta:
      lsof -i :8080
      kill -9 <PID>
 
-4. Lombok não funciona
+3. Lombok não funciona
    - Plugin não instalado ou annotation processing desativado
 
 ----------------------------------------

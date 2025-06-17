@@ -1,6 +1,7 @@
 org/example/garagemanagementapi/config/CorsConfig$1.class
 org/example/garagemanagementapi/config/CorsConfig.class
 org/example/garagemanagementapi/controller/SpotController.class
+org/example/garagemanagementapi/config/GlobalExceptionHandler.class
 org/example/garagemanagementapi/GarageManagementApiApplication.class
 org/example/garagemanagementapi/controller/EntryController.class
 org/example/garagemanagementapi/dto/RevenueResponse.class

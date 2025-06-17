@@ -1,5 +1,25 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Environment-dependent path to Maven home directory
-/mavenHomeManager.xml
+# Maven
+target/
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# MacOS
+.DS_Store
+
+# Sistema operacional
+Thumbs.db
+ehthumbs.db
+
+# Credenciais locais (caso crie .env)
+.env
+
+# Arquivos de build e jar
+*.jar
+*.war
+
+# Docker
+mysql-data/

@@ -8,6 +8,7 @@
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/dto/RevenueResponse.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/dto/WebhookEvent.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/dto/PlateStatusRequest.java
+/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/config/GlobalExceptionHandler.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/WebhookController.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/repository/VehicleRepository.java
 /Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller/EntryController.java

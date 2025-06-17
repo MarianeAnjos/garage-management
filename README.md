@@ -35,11 +35,11 @@ Configuração do Banco de Dados MySQL:
 
 Opção 1 – Usando Docker:
 -------------------------
-docker run --name mysql-db \
+docker run --name garage-db \
   -e MYSQL_ROOT_PASSWORD=root \
   -e MYSQL_DATABASE=garage_api \
-  -p 3306:3306 \
-  -d mysql:latest
+  -p 3307:3306 \
+  -d mysql:8.0
 
 Opção 2 – Instalação Local:
 ----------------------------
@@ -47,16 +47,27 @@ Crie o banco de dados:
 
 CREATE DATABASE garage_api CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+Opção 3 – Instalação Local:
+
+Crie um usuário com permissões:
+CREATE USER 'garage_user'@'localhost' IDENTIFIED BY 'password123';
+GRANT ALL PRIVILEGES ON garage_api.* TO 'garage_user'@'localhost';
+FLUSH PRIVILEGES;
+
 -----------------------------
 application.properties:
 -----------------------------
-spring.datasource.url=jdbc:mysql://localhost:3306/garage_api?useSSL=false&serverTimezone=UTC
+spring.datasource.url=jdbc:mysql://garage-db:3306/garage_db
 spring.datasource.username=root
 spring.datasource.password=root
+
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-server.port=8080
+
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/api-docs
+
+server.port=3003
 
 -----------------------------------------
 Executando o Projeto com Maven:
@@ -93,8 +104,127 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
    docker build -t garage-api .
 
 4. Rode o container:
-   docker run -d -p 8080:8080 --name garage-api garage-api
+  docker run -d -p 3003:3003 --name garage-api garage-api
 
+----------------------------------------
+Scripts Auxiliares:
+----------------------------------------
+``` Bash
+Scripts auxiliares: foram criados scripts para facilitar o processo de start/stop dos containers Docker e abertura do Swagger. Exemplo de inclusão no README:
+Scripts úteis
+start-garage.sh – Inicia a aplicação e o banco via Docker Compose, aguardando até que o MySQL esteja pronto:
+
+
+#!/bin/bash
+echo "⛔ Encerrando containers antigos..."
+docker-compose down
+
+echo "🚀 Subindo containers em segundo plano..."
+docker-compose up -d --build
+
+echo "⏳ Aguardando banco de dados ficar disponível..."
+until docker exec garage-db mysqladmin ping -h "localhost" --silent; do
+    echo "🔄 Banco ainda não está pronto. Aguardando..."
+    sleep 3
+done
+
+echo "✅ Banco de dados está disponível!"
+echo "🧪 Testando conexão com o banco de dados..."
+docker exec garage-db mysql -uroot -proot -e "USE garage_api; SHOW TABLES;"
+if [ $? -eq 0 ]; then
+    echo "✅ Conexão com o banco funcionando!"
+else
+    echo "❌ Falha ao conectar no banco de dados."
+fi
+
+Como usar:
+Dê permissão de execução: chmod +x start-garage.sh
+Execute: ./start-garage.sh
+
+start.sh – Inicia os containers e abre automaticamente o Swagger no navegador:
+
+
+#!/bin/bash
+echo "🔄 Subindo os containers com Docker Compose..."
+docker-compose up --build -d
+
+echo "🕒 Aguardando a API iniciar..."
+sleep 8  # Ajuste conforme o tempo de inicialização da aplicação
+
+echo "🌐 Abrindo Swagger no navegador..."
+xdg-open http://localhost:8080/swagger-ui/index.html  # No Linux use xdg-open
+
+Como usar:
+Dê permissão de execução: chmod +x start.sh
+Execute: ./start.sh
+
+clean.sh – Para todos os containers e limpa volumes/redes Docker associados:
+
+#!/bin/bash
+echo "🛑 Parando os containers..."
+docker-compose down -v
+
+echo "🧹 Limpando containers órfãos e redes não utilizadas..."
+docker container prune -f
+docker volume prune -f
+docker network prune -f
+
+echo "✅ Tudo limpo!"
+
+Como usar:
+Dê permissão de execução: chmod +x clean.sh
+Execute: ./clean.sh
+
+```
+=========================================
+ Configuração de Vagas no Estacionamento
+=========================================
+
+**Gerenciamento de Spots (Vagas)**  
+Cada vaga de estacionamento é gerenciada pela entidade `Spot`.  
+Todos os registros de vagas devem ser manipulados via `SpotRepository`.
+
+-----------------------------------------
+**Criando uma vaga no banco**
+-----------------------------------------
+Para adicionar manualmente uma vaga no MySQL, execute:
+
+```sql
+CREATE DATABASE garage_api CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE garage_api;
+
+INSERT INTO spot (lat, lng, occupied, sector) VALUES (-23.561684, -46.655981, false, 'A');
+
+SELECT * FROM spot;
+```
+
+-----------------------------------------
+**Criando uma vaga via API **
+-----------------------------------------
+
+``` bash
+curl -X POST http://localhost:3003/spots -H "Content-Type: application/json" -d '{
+  "lat": -23.561684,
+  "lng": -46.655981,
+  "sector": "A"
+}'
+
+```
+-------------------------------------
+***Verificar vagas existentes:***
+-------------------------------------
+```bash
+curl -X GET http://localhost:3003/spots
+```
+Cao precise consultar uma vaga especifica via lat/lng:
+
+```bash
+curl -X POST http://localhost:3003/spots/spot-status -H "Content-Type: application/json" -d '{
+  "lat": -23.561684,
+  "lng": -46.655981
+}'
+```
 -------------------------------------
 Endpoints Principais:
 -------------------------------------
@@ -107,6 +237,7 @@ GET      | /revenue              | Receita total ou por data (via ?date=YYYY-MM-
 GET      | /spots                | Lista todas as vagas
 POST     | /spots                | Cria uma nova vaga
 POST     | /spots/spot-status    | Consulta vaga via lat/lng
+
 ```
 ------------------------------
 Exemplo de Payloads:
@@ -131,6 +262,7 @@ EXIT:
   "licensePlate": "ZUL0001",
   "event": "EXIT"
 }
+
 
 ------------------------------
 ### Estrutura do Projeto
@@ -188,9 +320,12 @@ Para acessar o banco no terminal:
 docker exec -it mysql-db mysql -uroot -proot
 mysql> USE garage_api;
 
+
 ----------------------------------------
 Autoria:
 ----------------------------------------
 Projeto desenvolvido por Mariane Anjos  
 Contato: mariane.ferreiraanjos@outlook.com  
 Entrega técnica: Back-end 
+
+

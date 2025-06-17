@@ -6,87 +6,71 @@ import org.example.garagemanagementapi.repository.SpotRepository;
 import org.example.garagemanagementapi.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-
+import java.util.Optional;
 @Service
 public class GarageService {
 
-    private final VehicleRepository vehicleRepo;
-    private final SpotRepository spotRepo;
-    private final BillingService billingService;
+    private final VehicleRepository vehicleRepository;
+    private final SpotRepository spotRepository;
 
-    public GarageService(VehicleRepository vRepo, SpotRepository sRepo, BillingService billingService) {
-        this.vehicleRepo = vRepo;
-        this.spotRepo = sRepo;
-        this.billingService = billingService;
+    public GarageService(VehicleRepository vehicleRepository, SpotRepository spotRepository) {
+        this.vehicleRepository = vehicleRepository;
+        this.spotRepository = spotRepository;
     }
 
-    private Spot validarERegistrarVaga(Double lat, Double lng, String licensePlate) {
-        Spot spot = spotRepo.findByLatAndLng(lat, lng)
-                .orElseThrow(() -> new RuntimeException("Vaga não encontrada nas coordenadas."));
-
-        if (spot.isOccupied()) {
-            throw new RuntimeException("Vaga já está ocupada.");
-        }
-
-        spot.setLicensePlate(licensePlate);
-        spot.setOccupied(true);
-        spotRepo.save(spot);
-
-        return spot;
-    }
-
-    private void registrarVeiculo(String licensePlate, LocalDateTime entrada) {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setLicensePlate(licensePlate);
-        vehicle.setEntryTime(entrada);
-        vehicleRepo.save(vehicle);
-    }
-
-    public String registerEntry(String licensePlate, Double lat, Double lng) {
-        if (lat == null || lng == null) {
-            throw new RuntimeException("Latitude e longitude são obrigatórias.");
-        }
-
-        Spot spot = validarERegistrarVaga(lat, lng, licensePlate);
-        registrarVeiculo(licensePlate, LocalDateTime.now());
-
-        return "Veículo com placa " + licensePlate + " entrou pela cancela e foi vinculado à vaga " + spot.getId();
+    public Vehicle registerEntry(String licensePlate, Double lat, Double lng) {
+        Vehicle vehicle = new Vehicle(licensePlate, LocalDateTime.now());
+        return vehicleRepository.save(vehicle);
     }
 
     public String parkVehicle(String licensePlate, Double lat, Double lng) {
-        if (lat == null || lng == null) {
-            throw new RuntimeException("Latitude e longitude são obrigatórias.");
+        // Agora busca qualquer veículo, independente do exitTime
+        Optional<Vehicle> vehicleOpt = vehicleRepository.findFirstByLicensePlate(licensePlate);
+
+        if (vehicleOpt.isEmpty()) {
+            throw new RuntimeException("Veículo não encontrado para estacionar");
         }
 
-        Spot spot = validarERegistrarVaga(lat, lng, licensePlate);
-        registrarVeiculo(licensePlate, LocalDateTime.now());
+        Spot spot = spotRepository.findByLatAndLng(lat, lng)
+                .orElseGet(() -> {
+                    Spot newSpot = new Spot();
+                    newSpot.setLat(lat);
+                    newSpot.setLng(lng);
+                    newSpot.setSector("A"); // ou lógica dinâmica
+                    return spotRepository.save(newSpot);
+                });
 
-        return "Veículo com placa " + licensePlate + " estacionado na vaga " + spot.getId();
+        spot.setOccupied(true);
+        spotRepository.save(spot);
+
+        Vehicle vehicle = vehicleOpt.get();
+        vehicle.setSpot(spot);
+        vehicleRepository.save(vehicle);
+
+        return "Veículo estacionado";
     }
 
     public String registerExit(String licensePlate) {
-        Vehicle vehicle = vehicleRepo.findFirstByLicensePlateAndExitTimeIsNull(licensePlate)
-                .orElseThrow(() -> new RuntimeException("Veículo não encontrado ou já saiu."));
+        // Agora busca qualquer veículo, independente do exitTime
+        Optional<Vehicle> vehicleOpt = vehicleRepository.findFirstByLicensePlate(licensePlate);
 
-        LocalDateTime exitTime = LocalDateTime.now();
-        long minutes = Duration.between(vehicle.getEntryTime(), exitTime).toMinutes();
+        if (vehicleOpt.isEmpty()) {
+            throw new RuntimeException("Veículo não encontrado para saída");
+        }
 
-        int totalSpots = (int) spotRepo.count();
-        int freeSpots = (int) spotRepo.countByOccupiedFalse();
-        double price = billingService.calculateCharge(minutes, totalSpots, freeSpots, 10.0);
+        Vehicle vehicle = vehicleOpt.get();
+        vehicle.setExitTime(LocalDateTime.now());
 
-        vehicle.setExitTime(exitTime);
-        vehicle.setPrice(price);
-        vehicleRepo.save(vehicle);
-
-        spotRepo.findByLicensePlate(licensePlate).ifPresent(spot -> {
+        Spot spot = vehicle.getSpot();
+        if (spot != null) {
             spot.setOccupied(false);
-            spot.setLicensePlate(null);
-            spotRepo.save(spot);
-        });
+            spotRepository.save(spot);
+        }
 
-        return "Veículo com placa " + licensePlate + " saiu. Valor total: R$ " + String.format("%.2f", price);
+        vehicleRepository.save(vehicle);
+
+        return "Saída registrada";
     }
 }
+

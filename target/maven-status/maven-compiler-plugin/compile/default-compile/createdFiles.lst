@@ -8,6 +8,7 @@ org/example/garagemanagementapi/dto/RevenueResponse.class
 org/example/garagemanagementapi/controller/WebhookController.class
 org/example/garagemanagementapi/service/PricingService.class
 org/example/garagemanagementapi/controller/ParkedController.class
+org/example/garagemanagementapi/config/OpenApiConfig.class
 org/example/garagemanagementapi/repository/VehicleRepository.class
 org/example/garagemanagementapi/model/Spot.class
 org/example/garagemanagementapi/service/BillingService.class

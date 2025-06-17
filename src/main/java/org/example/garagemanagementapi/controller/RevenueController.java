@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,15 +38,18 @@ public class RevenueController {
             vehicles = vehicleRepository.findByExitTimeIsNotNull();
         }
 
-        double totalRevenue = vehicles.stream()
-                .mapToDouble(v -> (v.getPrice() != null && v.getPrice() >= 0) ? v.getPrice() : 0.0)
-                .sum();
+        BigDecimal totalRevenue = vehicles.stream()
+                .map(v -> v.getPrice() != null && v.getPrice().compareTo(BigDecimal.ZERO) >= 0
+                        ? v.getPrice()
+                        : BigDecimal.ZERO)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         RevenueResponse response = new RevenueResponse();
-        response.setAmount(totalRevenue);
+        response.setAmount(totalRevenue.doubleValue()); // ou .setAmount(totalRevenue) se usar BigDecimal no DTO
         response.setCurrency("BRL");
         response.setTimestamp(LocalDateTime.now());
 
         return ResponseEntity.ok(response);
     }
 }
+

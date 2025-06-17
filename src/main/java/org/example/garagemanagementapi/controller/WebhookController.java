@@ -1,18 +1,11 @@
 package org.example.garagemanagementapi.controller;
 
 import org.example.garagemanagementapi.dto.WebhookEvent;
-import org.example.garagemanagementapi.model.Spot;
-import org.example.garagemanagementapi.model.Vehicle;
-import org.example.garagemanagementapi.repository.SpotRepository;
-import org.example.garagemanagementapi.repository.VehicleRepository;
 import org.example.garagemanagementapi.service.GarageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Optional;
 @RestController
 @RequestMapping("/webhook")
 public class WebhookController {

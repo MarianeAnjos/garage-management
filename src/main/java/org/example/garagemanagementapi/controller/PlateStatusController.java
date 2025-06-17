@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-
 @RestController
 @RequestMapping("/plate-status")
 public class PlateStatusController {
@@ -33,8 +32,9 @@ public class PlateStatusController {
     public ResponseEntity<PlateStatusResponse> getPlateStatus(@Valid @RequestBody PlateStatusRequest request) {
         String licensePlate = request.getLicensePlate();
 
-        Vehicle vehicle = vehicleRepo.findFirstByLicensePlateAndExitTimeIsNull(licensePlate)
-                .orElseThrow(() -> new RuntimeException("Veículo não encontrado ou já saiu."));
+        // Correção: Agora busca o veículo sem filtrar por `exitTime`
+        Vehicle vehicle = vehicleRepo.findFirstByLicensePlate(licensePlate)
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado."));
 
         LocalDateTime now = LocalDateTime.now();
         long minutes = Duration.between(vehicle.getEntryTime(), now).toMinutes();
@@ -57,3 +57,5 @@ public class PlateStatusController {
         return ResponseEntity.ok(response);
     }
 }
+
+

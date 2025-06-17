@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/spots")
@@ -28,13 +27,13 @@ public class SpotController {
     @GetMapping("/{id}")
     public ResponseEntity<Spot> getSpotById(@PathVariable Long id) {
         return spotRepository.findById(id)
-                .map(spot -> ResponseEntity.ok(spot))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping
     public ResponseEntity<Spot> createSpot(@RequestBody Spot spot) {
-        spot.setId(null); // Garante que não sobrescreve uma vaga existente
+        spot.setId(null);
         Spot novoSpot = spotRepository.save(spot);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoSpot);
     }
@@ -45,7 +44,7 @@ public class SpotController {
         Double lng = coord.get("lng");
 
         if (lat == null || lng == null) {
-            return ResponseEntity.badRequest().build(); // Ou retornar 400 com DTO separado, se quiser
+            return ResponseEntity.badRequest().build();
         }
 
         return spotRepository.findByLatAndLng(lat, lng)

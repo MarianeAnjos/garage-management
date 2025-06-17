@@ -72,7 +72,7 @@ Executando o Projeto com Maven:
    java -jar target/garage-management-api-1.0-SNAPSHOT.jar
 
 4. Acesse:
-   Swagger UI: http://localhost:8080/swagger-ui.html
+   Swagger UI: http://localhost:3003/swagger-ui/index.html
    API Docs JSON: http://localhost:8080/v3/api-docs
 
 -----------------------------

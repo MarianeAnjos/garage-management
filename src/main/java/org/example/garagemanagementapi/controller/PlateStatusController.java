@@ -6,7 +6,8 @@ import org.example.garagemanagementapi.model.Vehicle;
 import org.example.garagemanagementapi.repository.SpotRepository;
 import org.example.garagemanagementapi.repository.VehicleRepository;
 import org.example.garagemanagementapi.service.BillingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -20,7 +21,6 @@ public class PlateStatusController {
     private final SpotRepository spotRepo;
     private final BillingService billingService;
 
-    @Autowired
     public PlateStatusController(VehicleRepository vehicleRepo,
                                  SpotRepository spotRepo,
                                  BillingService billingService) {
@@ -30,7 +30,7 @@ public class PlateStatusController {
     }
 
     @PostMapping
-    public PlateStatusResponse getPlateStatus(@RequestBody PlateStatusRequest request) {
+    public ResponseEntity<PlateStatusResponse> getPlateStatus(@Valid @RequestBody PlateStatusRequest request) {
         String licensePlate = request.getLicensePlate();
 
         Vehicle vehicle = vehicleRepo.findFirstByLicensePlateAndExitTimeIsNull(licensePlate)
@@ -44,7 +44,7 @@ public class PlateStatusController {
         double price = billingService.calculateCharge(minutes, totalSpots, freeSpots, 10.0);
 
         PlateStatusResponse response = new PlateStatusResponse();
-        response.setLicensePlate(licensePlate);
+        response.setLicensePlate(vehicle.getLicensePlate());
         response.setEntryTime(vehicle.getEntryTime());
         response.setTimeParked(now);
         response.setPriceUntilNow(price);
@@ -54,6 +54,6 @@ public class PlateStatusController {
             response.setLng(spot.getLng());
         });
 
-        return response;
+        return ResponseEntity.ok(response);
     }
 }

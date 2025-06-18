@@ -273,9 +273,11 @@ garage-management-api/
     └── main/
         ├── java/
         │   └── org/example/garagemanagementapi/
+                ├── config/
         │       ├── controller/
         │       ├── dto/
         │       ├── model/
+                ├── service/
         │       ├── repository/
         │       └── GarageManagementApiApplication.java
         └── resources/

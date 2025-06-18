@@ -15,6 +15,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
      List<Vehicle> findByExitTimeIsNotNull();
 
-     // Correção: Agora busca por qualquer veículo, independente da saída registrada
      Optional<Vehicle> findFirstByLicensePlate(String licensePlate);
 }

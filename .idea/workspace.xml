@@ -5,46 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b52ce386-16c4-485b-98ca-53601dad56e6" name="Changes" comment="classe spot, spot repository e config banco de dados">
-      <change afterPath="$PROJECT_DIR$/clean.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/start-garage.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/GarageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/GarageConfigDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/SectorDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/SpotDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/model/Sector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/repository/SectorRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/GarageManagementApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/GarageManagementApiApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/EntryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/EntryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/PlateStatusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/PlateStatusController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/RevenueController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/RevenueController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/SpotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/SpotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/WebhookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/controller/WebhookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/WebhookEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/WebhookEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/PlateStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/PlateStatusResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/RevenueResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/dto/RevenueResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/model/Spot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/model/Spot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/model/Vehicle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/repository/SpotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/repository/SpotRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/repository/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/repository/VehicleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/service/GarageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/garagemanagementapi/service/GarageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application-test.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/GarageManagementApiApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/GarageManagementApiApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/config/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/config/GlobalExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/EntryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/EntryController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/PlateStatusController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/PlateStatusController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/RevenueController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/RevenueController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/SpotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/SpotController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/WebhookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/controller/WebhookController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/dto/WebhookEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/dto/WebhookEvent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/model/Spot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/model/Spot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/model/Vehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/model/Vehicle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/repository/SpotRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/repository/SpotRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/repository/VehicleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/repository/VehicleRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/service/GarageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/garagemanagementapi/service/GarageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/garage-management-api-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/garage-management-api-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/garage-management-api-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/garage-management-api-1.0-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/application-test.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,12 +48,12 @@
     &quot;assignee&quot;: &quot;MarianeAnjos&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MarianeAnjos/garage-management",
-    "accountId": "982d8f02-dd70-42a6-bca7-dda7cf11ac9c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MarianeAnjos/garage-management&quot;,
+    &quot;accountId&quot;: &quot;982d8f02-dd70-42a6-bca7-dda7cf11ac9c&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -95,36 +69,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.GarageManagementApiApplication.executor": "Run",
-    "JUnit.BillingServiceTest.executor": "Run",
-    "JUnit.PricingServiceTest.executor": "Run",
-    "JUnit.WebhookControllerTest.executor": "Run",
-    "JUnit.controller in garage-management-api.executor": "Run",
-    "JUnit.garagemanagementapi in garage-management-api.executor": "Run",
-    "JUnit.java in garage-management-api.executor": "Run",
-    "Maven.garage-management-api [build].executor": "Run",
-    "Maven.garage-management-api [clean,install,-X].executor": "Run",
-    "Maven.garage-management-api [clean,install].executor": "Run",
-    "Maven.garage-management-api [clean].executor": "Run",
-    "Maven.garage-management-api [mvn...].executor": "Run",
-    "Maven.garage-management-api [run].executor": "Run",
-    "Maven.garage-management-api [spring-boot:run].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHELLCHECK.PATH": "/Users/marianeferreiradosanjos/Library/Application Support/JetBrains/IdeaIC2025.1/plugins/Shell Script/shellcheck",
-    "git-widget-placeholder": "main",
-    "last_directory_selection": "/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller",
-    "last_opened_file_path": "/Users/marianeferreiradosanjos/garage-management",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.GarageManagementApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BillingServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PricingServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WebhookControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.controller in garage-management-api.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.garagemanagementapi in garage-management-api.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in garage-management-api.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [build].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [clean,install,-X].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [mvn...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.garage-management-api [spring-boot:run].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/Users/marianeferreiradosanjos/Library/Application Support/JetBrains/IdeaIC2025.1/plugins/Shell Script/shellcheck&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/marianeferreiradosanjos/garage-management-api/src/main/java/org/example/garagemanagementapi/controller&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/marianeferreiradosanjos/garage-management&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.example.garagemanagementapi.controller" />

@@ -16,7 +16,6 @@ public class RevenueResponse {
     @Schema(description = "Horário da geração do relatório")
     private LocalDateTime timestamp;
 
-    // Getters e Setters
     public double getAmount() { return amount; }
     public void setAmount(double amount) { this.amount = amount; }
 

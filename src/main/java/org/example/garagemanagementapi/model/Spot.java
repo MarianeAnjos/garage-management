@@ -4,9 +4,10 @@ import jakarta.persistence.*;
 
 @Entity
 public class Spot {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;  // Recebe o ID enviado pelo simulador, por isso não geramos
+
     private String sector;
     private double lat;
     private double lng;

@@ -32,7 +32,6 @@ public class PlateStatusController {
     public ResponseEntity<PlateStatusResponse> getPlateStatus(@Valid @RequestBody PlateStatusRequest request) {
         String licensePlate = request.getLicensePlate();
 
-        // Correção: Agora busca o veículo sem filtrar por `exitTime`
         Vehicle vehicle = vehicleRepo.findFirstByLicensePlate(licensePlate)
                 .orElseThrow(() -> new RuntimeException("Veículo não encontrado."));
 

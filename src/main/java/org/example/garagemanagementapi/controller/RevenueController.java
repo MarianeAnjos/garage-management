@@ -45,7 +45,7 @@ public class RevenueController {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         RevenueResponse response = new RevenueResponse();
-        response.setAmount(totalRevenue.doubleValue()); // ou .setAmount(totalRevenue) se usar BigDecimal no DTO
+        response.setAmount(totalRevenue.doubleValue());
         response.setCurrency("BRL");
         response.setTimestamp(LocalDateTime.now());
 

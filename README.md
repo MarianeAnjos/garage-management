@@ -176,9 +176,9 @@ Dê permissão de execução: chmod +x clean.sh
 Execute: ./clean.sh
 
 ```
-=========================================
- Configuração de Vagas no Estacionamento
-=========================================
+-----------------------------------------
+Configuração de Vagas no Estacionamento
+-----------------------------------------
 
 **Gerenciamento de Spots (Vagas)**  
 Cada vaga de estacionamento é gerenciada pela entidade `Spot`.  

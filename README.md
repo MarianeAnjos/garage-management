@@ -3,7 +3,8 @@ Garage Management API
 
 Descrição:
 -----------
-API REST em Java 17 com Spring Boot para gerenciamento de vagas de estacionamento e controle de entrada/saída de veículos via Webhook. Utiliza MySQL como banco de dados e Swagger para documentação. Desenvolvido com Maven, Docker e Lombok.
+API REST em Java 17 com Spring Boot para gerenciamento de vagas de estacionamento e controle de entrada/saída de veículos via Webhook.
+Utiliza MySQL como banco de dados e Swagger para documentação. Desenvolvido com Maven, Docker e Lombok.
 
 ----------------------------
 Tecnologias e Ferramentas:

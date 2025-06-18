@@ -118,7 +118,6 @@ Scripts úteis:
 start-garage.sh – Inicia a aplicação e o banco via Docker Compose,
 aguardando até que o MySQL esteja pronto:
 
-
 #!/bin/bash
 echo "⛔ Encerrando containers antigos..."
 docker-compose down
@@ -144,9 +143,8 @@ fi
 Como usar:
 Dê permissão de execução: chmod +x start-garage.sh
 Execute: ./start-garage.sh
-
+_____________________________________________________________________________
 start.sh – Inicia os containers e abre automaticamente o Swagger no navegador:
-
 
 #!/bin/bash
 echo "🔄 Subindo os containers com Docker Compose..."
@@ -161,7 +159,7 @@ xdg-open http://localhost:8080/swagger-ui/index.html  # No Linux use xdg-open
 Como usar:
 Dê permissão de execução: chmod +x start.sh
 Execute: ./start.sh
-
+_____________________________________________________________________________
 clean.sh – Para todos os containers e limpa volumes/redes Docker associados:
 
 #!/bin/bash

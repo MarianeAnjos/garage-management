@@ -111,9 +111,11 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 Scripts Auxiliares:
 ----------------------------------------
 ``` Bash
-Scripts auxiliares: foram criados scripts para facilitar o processo de start/stop dos containers Docker e abertura do Swagger. Exemplo de inclusão no README:
+Scripts auxiliares: foram criados scripts para facilitar o processo de start/stop dos
+containers Docker e abertura do Swagger. Exemplo de inclusão no README:
 Scripts úteis
-start-garage.sh – Inicia a aplicação e o banco via Docker Compose, aguardando até que o MySQL esteja pronto:
+start-garage.sh – Inicia a aplicação e o banco via Docker Compose,
+aguardando até que o MySQL esteja pronto:
 
 
 #!/bin/bash
